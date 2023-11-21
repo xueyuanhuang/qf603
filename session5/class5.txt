@@ -1,0 +1,74 @@
+#This code sequence installs required R libraries (assuming that you are working from a fresh R installation
+install.packages("fpp2")
+install.packages("gridExtra")
+install.packages("seasonal")
+
+
+#There are multiple R code sequences below
+#Each code sequence is intended to be 'standalone'
+#This means that you should be able to copy-paste-run each code sequence from a 'fresh' newly started R instance. This is conditional on having installed the R libraries above
+#Note:  Apart from restarting, you can also clear your environment in R by pressing Ctrl Shift F10 (on a laptop, maybe Fn Ctrl Shift F10)
+
+library(fpp2)
+library(gridExtra)
+library(seasonal)
+
+#illustrating the effect of some utility functions
+elecsales	#print out contents of elecsales dataset which is a sample dataset in fpp2
+head(elecsales)	#print out first 6 rows of elecsales dataset.  This might be more useful for large datasets
+tail(elecsales) #print out last 6 rows of elecsales dataset
+length(elecsales) #print out number of elements in elecsales dataset
+x<-window(elecsales, 1995, 2000)	#extract elements in elecsales dataset between 1995 and 2000 inclusive
+
+#simple time series plots
+autoplot(elecsales)	
+
+#Box Cox transformation
+autoplot(elec)	#visualize raw variable
+autoplot(BoxCox(elec,-1))	#BoxCox transformation with lambda = -1
+autoplot(BoxCox(elec,0.2))	#BoxCox transformation with lambda = 0.2
+autoplot(BoxCox(elec,0.5))	#BoxCox transformation with lambda = 0.5
+autoplot(BoxCox(elec, BoxCox.lambda(elec)))	#BoxCox transformation using automatically calibrated lambda
+
+#automated decomposition
+autoplot(decompose(elec))
+autoplot(decompose(elec, type="multiplicative"))
+
+#moving averages
+head(elec,10)
+head(ma(elec,5),10)
+head(ma(elec,3),10)
+
+#removing trend cycle component from data series (additive) 
+autoplot(elec-ma(elec,12))
+autoplot(elec)
+autoplot(ma(elec,12))
+
+#manual estimation of seasonal component 
+detrendedseries = elec - ma(elec,12)
+tapply(detrendedseries, cycle(detrendedseries), mean, na.rm = TRUE)
+plot(tapply(detrendedseries, cycle(detrendedseries), mean, na.rm=TRUE)
+
+#compute sum of seasonal component for shifting 
+sum(tapply(detrendedseries, cycle(detrendedseries), mean, na.rm=TRUE))
+
+#x11 decomposition 
+autoplot(seas(x=elec, x11=""))
+
+#stl decomposition 
+autoplot(stl(elec, t.window=13, s.window="periodic", robust=TRUE))
+
+#automated stl 
+autoplot(mstl(elec))
+
+#forecasting w decomposition 
+fcast = stlf(elecequip, method='naive')
+
+
+#Ljung-Box test for residuals
+checkresiduals(naive(ausbeer))
+checkresiduals(snaive(ausbeer))
+checkresiduals(naive(elecsales))
+checkresiduals(snaive(elecsales))
+
+

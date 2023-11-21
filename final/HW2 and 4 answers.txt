@@ -1,0 +1,54 @@
+HW2 Answers
+
+Q1a.  -3.6332
+
+Q1b.  -3.6322 - 0.2630
+
+Q1c.  same answer as for Q1b
+
+Q1d.  -3.622 - 0.0450
+
+Q2a.  0.2399
+
+Q2b.  0.2399 + 0.3526
+
+Q2c.  same answer as for Q2b.
+
+Q2d.  0.2399*1 -0.0927*1
+
+
+
+HW4 Answers
+
+Q1:  autoplot, monthdays, BoxCox, nsdiffs, diff, ndiffs, diff, tsdisplay, Arima, checkresiduals 
+
+Notes:  This question is focused on what you might genuinely do in practical situations.  As such, minor swaps (e.g. between monthdays and BoxCox) might be fine.  Notwithstanding, I still think the displayed sequence above is better.
+
+
+Q2.  
+a.  MA(1).  Note that the first bar is lag 0
+b.  MA(2)
+c.  
+Seasonal components:
+    SAR(1), SAR(2) [we cannot say for sure, need PACF]
+    SMA(1), SMA(2), SMA(3), or combinations of the above.
+Non seasonal:
+	Maybe nothing, or MA(1), MA(2), AR(1) [cannot say for sure on AR]
+
+Overall answer:  mix and match seasonal and non seasonal components above.  There may also be other possibilities
+
+
+
+Q3.  1 cointegrating relationship
+
+Q4.  First, check if all the data series are stationary.  If they are not, difference them all until they are rendered stationary.  Therefter, build a VAR model.  We can run VAR select, which uses BIC to determine optimal starting lag.  Following this, check residuals for time series information and increment order of VAR until stationary results are obtained.  
+
+Q5.  If there is exactly 1 cointegrating relationship, build a VECM.  If unable to reject, it may mean that all the TS are stationary, we can use OLS in raw levels
+
+Q6.  	B8a.  No, predictable increase in variance
+	B8b.  No, same as above
+	B8c.  No, predictable change in value
+	B8d.  Yes, no predicatable change in value or variance
+	B8e.  Yes, same as above
+
+
